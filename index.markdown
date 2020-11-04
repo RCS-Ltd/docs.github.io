@@ -344,6 +344,8 @@ I have also included a breakdown of the types used in that model for clarity.
         /// </summary>
         public DateTime? DeliveryDate { get; set; }
 
+        public string StreetwiseOrderNumber { get; set; }
+
 	JSON : {
 		"orderNo" : "",
 		"memberCode" : 0,
@@ -360,7 +362,8 @@ I have also included a breakdown of the types used in that model for clarity.
 		"hasAgeBeenVerified" : false,
 		"staffDiscount" : 0,
 		"couponValue" : 0,
-		"deliveryDate" : null
+		"deliveryDate" : null,
+        "streetwiseOrderNumber" : null
 	}
 ``` 
 
@@ -407,6 +410,8 @@ I have also included a breakdown of the types used in that model for clarity.
         /// </summary>
         public string PromotionId { get; set; }
 
+        public string StreetwiseOrderNumber { get; set; }
+
 	JSON : {
 		"orderNo" : "",
 		"productCode" : "",
@@ -414,7 +419,8 @@ I have also included a breakdown of the types used in that model for clarity.
 		"purchasePrice" : "",
 		"orderRowId" : "",
 		"standardSellingPrice" : 0,
-		"promotionId" : ""
+		"promotionId" : "",
+        "streetwiseOrderNumber" : null
 	}
 ```
 
@@ -496,7 +502,6 @@ I have also included a breakdown of the types used in that model for clarity.
 	} 
 ```
 
-
 ## For new refund and cancellations
 
 #### Streetwise.Api.Models.OrderReferenceHeader
@@ -508,7 +513,7 @@ I have also included a breakdown of the types used in that model for clarity.
         public int OrderId { get; set; }
         public decimal DeliveryCharge { get; set; }
         public decimal TotalOrderValue { get; set; }
-
+        public string StreetwiseOrderNumber { get; set; }
 
         /// <summary>
         /// Note that for refunds, the qty and price needs to be the amount and qty to refund
@@ -522,6 +527,7 @@ I have also included a breakdown of the types used in that model for clarity.
 		"orderId: 0,
 		"deliveryCharge" : 0,
 		"totalOrderValue" : 0,
+        "streetwiseOrderNumber" : null
 		"items: [OrderReferenceItem, OrderReferenceItem, OrderReferenceItem]
 	}
 ```
