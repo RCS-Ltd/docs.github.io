@@ -6,15 +6,8 @@ layout: default
 ---
 ## Using the provided library Streetwise.Api.Connect
 
-The library is a .net standard 2.0 library.  and should work in almost any platform
-Install as a reference to NOP or into a nop plugin
+The library is a .net standard 2.0 library.  and should work in almost any platform that runs .net and supports .net standard.
 
-An example below shows how to login and send data to the API using the library
-
-### NOTE:   Code provided here is example code for Streetwise.Api.Connect client usage only, and is not to be treated as production ready
-```It is the developers responsibility to ensure their code is correct and that data passed has been validated```
-
-<script src="https://gist.github.com/davidparker/1ff154061d715cfd7636f4ac8b935834.js" height="200"></script>
 
 ### Endpoints
 
@@ -25,42 +18,14 @@ An example below shows how to login and send data to the API using the library
 	// example
 	_authService.GetLogin("hudnoewihrnl.lcidjoukjfhrwrug", "asjhajshajshjaskjhuwjb7213tevdyuy7ewru", "https:127.0.0.1:8858/")
 
-	// Refresh token  ( TTL is only 10 mins )  if you require access for more than 10 mins, you must refresh the token
-	_authService.RefreshLogin(string existingToken, string apiUrl);
-	// existingToken is your existing token from the AccessToken property in GetLogin Response ( see models )
+	public async Task<ApiResponse> GetData(RequestModel requestModel, string apiUrl, string endpoint)
 
-	// getting data from the API
-        /// <summary>
-        /// Get items from the api
-        /// </summary>
-        /// <param name="requestModel">request model ( see models )</param>
-        /// <param name="apiUrl">URL ending with forward slash</param>
-        /// <param name="endpoint">ApiEndpoint</param>
-        /// <returns>ApiResponse object</returns>
-        public async Task<ApiResponse> GetData(RequestModel requestModel, string apiUrl, string endpoint)
-
-        // Posting / sending data to the API
-        /// <summary>
-        /// Send an item for insert or update
-        /// </summary>
-        /// <param name="item">object must have a base of BAseModel</param>
-        /// <param name="apiUrl">URL ending with forward slash</param>
-        /// <param name="endpoint">ApiEndpoint</param>
-        /// <returns>ApiResponse object</returns>
-        public async Task<ApiResponse> SendData(RequestModel requestModel, string apiUrl, string endpoint)
+    public async Task<ApiResponse> SendData(RequestModel requestModel, string apiUrl, string endpoint)
 ```
 
 ## Data
 
-The client provides some models that provide information directly, if needed.
-
-
 ```cs
-  // Gets the available endponts
-  Streetwise.Api.Connect.Models.ApiAuthEndpoints
-  // example
-  string loginUrl = Streetwise.Api.Connect.Models.ApiAuthEndpoints.Login  // output => "api/ApiAuthenticate/Login"
-
   // Details of error messages
   Streetwise.Api.Connect.Models.ApiErrorMessages
   // example
@@ -78,19 +43,12 @@ The client provides some models that provide information directly, if needed.
     public class ApiEndpoints
     {
         public const string PostOnlineOrderDetail = "api/OnlineOrderDetail/Create";
-        public const string FinalOrderConfirm = "api/OnlineOrderDetail/FinalOrderConfirm";
         public const string CancelOrder = "api/OnlineOrderDetail/CancelOrder";
         public const string CancelOrderItems = "api/OnlineOrderDetail/CancelOrderItems";
         public const string RefundOrder = "api/OnlineOrderDetail/RefundOrder";
         public const string RefundOrderItem = "api/OnlineOrderDetail/RefundOrderItem";
-
-        // Exporting Endpoints.  can be used with Streetwise.Api.Connect.ApiAccessService.GetData
-        public const string GetProductChanges = "api/ExportProduct/GetProductChanges";
-        public const string GetAllProductsExport = "api/ExportProduct/GetAll";
-        public const string ExportCategories = "api/ExportCategory/GetAll";
-        public const string ExportPrices = "api/ExportPrice/GetAll";
-        public const string ExportPromotions = "api/ExportPromotion/GetForLocation";
-        public const string ExportStock = "api/ExportStock/GetAll";
+        public const string FindOrdersByStatus = "api/OnlineOrderDetail/FindByStatus";
+        public const string FindOrderByOrderId = "api/OnlineOrderDetail/FindByOrderId"
     }
   }
   
@@ -292,7 +250,7 @@ I have also included a breakdown of the types used in that model for clarity.
 #### Streetwise.Api.Models.OnlineOrderDto
 ```cs
          /// <summary>
-        /// The order number / NOP Order GUID
+        /// The order number
         /// REQUIRED
         /// </summary>
         public string OrderNo { get; set; }
@@ -538,35 +496,6 @@ I have also included a breakdown of the types used in that model for clarity.
 	} 
 ```
 
-## Final Order Confirmation.
-
-Final order confirmation is the same data and models as the Order.   However you are sending to the endpoint
-
-``` public const string FinalOrderConfirm = "api/OnlineOrderDetail/FinalOrderConfirm"; ```
-
-All the endpoints for sending data work in the same way.  You have to post the RequestModel to the correct Endpoint
-with the data.   Please see emails for more details  (subject Updates And Changes )   31/07/2020.
-
-```
-A FinalOrderConfirmation is in order to send us updates with regards to any changes made after picking, and price changes.
-as less qty etc could result in a separate total and separate delivery charge.
-
-The Endpoint is different so that we can detect between an order UPdate and an order create.   And also so we can set the right status
-at the right time during the workflow.
-```
-
-``` cs
-\\ As a reminder.  here is an example of how to send data, including finalOrderNotification to Streetwise.APi
-        // Posting / sending data to the API
-        /// <summary>
-        /// Send an item for insert or update
-        /// </summary>
-        /// <param name="item">object must have a base of BAseModel</param>
-        /// <param name="apiUrl">URL ending with forward slash</param>
-        /// <param name="endpoint">ApiEndpoint</param>
-        /// <returns>ApiResponse object</returns>
-        public async Task<ApiResponse> SendData(RequestModel requestModel, string apiUrl, string endpoint)
-```
 
 ## For new refund and cancellations
 
@@ -616,8 +545,8 @@ at the right time during the workflow.
 
 ## Refunds And Cancellations
 
-There are now new endpoints for this.  Takes in a OrderReferenceHeader as the data.
-by TotalOrderValue.  this should be including the delivery charge
+Takes in a OrderReferenceHeader as the data.
+The TotalOrderValue.  this should be including the delivery charge
 
 1.  Can Cancel whole order.   Must contain order items
 2.  Can Cancel Order item ( not partial )  Must include order header new total as it should be now, and delivery.
