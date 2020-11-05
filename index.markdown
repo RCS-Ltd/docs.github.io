@@ -716,9 +716,58 @@ namespace Streetwise.Api.Models
 
 ```
 
+Please note that all date saved and outputted is in UTC format, It is up to the developer to 
+format for the region in that it would be displayed in order to show the correct relative time.
+
+The return model is the normal return model, with OrderSearchAndResults in the item property.
+
 ### Order Details
 
+Order details can be fetched for an individual order, The field that will be searched is the OrderId field (int)
+and not the StreetwiseOrderId.   It would be wise when saving order, to save all the information.
 
+Your Order ID information must be provided in the data property of the request Model
+
+## Returned data type
+The data will be returned inside the item property of the ApiResponse.
+below is a detailed description of the data type.
+
+```cs
+namespace Streetwise.Api.Models
+{
+    public class OnlineOrderInformation
+    {
+        public OrderInfo OrderInfo { get; set; }
+        public List<OrderItemInfo> Items { get; set; }
+        public List<OnlineOrderNoteDto> Notes { get; set; }
+		public OnlineOrderDeliveryAddressDto DeliveryAddress { get; set; }
+    }
+
+    public class OrderInfo : OnlineOrderDto  // see details above for description of this base model
+    {
+        
+    }
+
+    public class OrderItemInfo : OnlineOrderItemsDto // see details above for description of this base model
+    {
+        public string ProductName { get; set; }
+        public DateTime? CancelOrRefundedUtc { get; set; }
+    }
+
+}
+
+namespace Streetwise.Api.Models
+{
+    public class OnlineOrderNoteDto : BaseIntIdModel
+    {
+        public int OrderId { get; set; }
+        public DateTime NoteDate { get; set; }
+        public string Note { get; set; }
+        public string WhoBy { get; set; }
+    }
+}
+
+```
 
 ## Validation
 
