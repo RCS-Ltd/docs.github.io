@@ -638,81 +638,81 @@ You can of course, skip the fetching of the pre-loaded model and just use the mo
 
 namespace Streetwise.Api.Models
 {
-    public class OrderSearchAndResults
-    {
-        /// <summary>
-        /// The Results of the search
-        /// </summary>
-        public List<OrderSearchResult> Results { get; set; }
+	public class OrderSearchAndResults
+	{
+		/// <summary>
+		/// The Results of the search
+		/// </summary>
+		public List<OrderSearchResult> Results { get; set; }
 
-        /// <summary>
-        /// List of available status
-        /// </summary>
-        public List<string> StatusValues { get; set; }
+		/// <summary>
+		/// List of available status
+		/// </summary>
+		public List<string> StatusValues { get; set; }
 
-        /// <summary>
-        /// List of status types to search for
-        /// </summary>
-        public List<string> SearchStatus { get; set; }
+		/// <summary>
+		/// List of status types to search for
+		/// </summary>
+		public List<string> SearchStatus { get; set; }
 
-        /// <summary>
-        /// Daterange search   Start date of range
-        /// </summary>
-        public DateTime? StartRange { get; set; }
+		/// <summary>
+		/// Daterange search   Start date of range
+		/// </summary>
+		public DateTime? StartRange { get; set; }
 
-        /// <summary>
-        /// Date range search, end of search range
-        /// </summary>
-        public DateTime? EndRange { get; set; }
+		/// <summary>
+		/// Date range search, end of search range
+		/// </summary>
+		public DateTime? EndRange { get; set; }
 
-        /// <summary>
-        /// Specific location to search for
-        /// </summary>
-        public string LocationCode { get; set; }
-    }
+		/// <summary>
+		/// Specific location to search for
+		/// </summary>
+		public string LocationCode { get; set; }
+	}
 }
 
 namespace Streetwise.Api.Models
 {
-    public class OrderSearchResult
-    {
-        public int Id { get; set; }
-        public decimal OrderTotal { get; set; }
-        public string LocationCode { get; set; }
-        public DateTime? DeliveryDate { get; set; }
-        public int OrderStatusCode { get; set; }
-        public string OrderGuid { get; set; }
-        public int OrderId { get; set; }
-        public DateTime OrderDateUtc { get; set; }
-        public int RowCount { get; set; }
-        public string OrderStatus { get; set; }
-        public string StreetwiseOrderId { get; set; }
-    }
+	public class OrderSearchResult
+	{
+		public int Id { get; set; }
+		public decimal OrderTotal { get; set; }
+		public string LocationCode { get; set; }
+		public DateTime? DeliveryDate { get; set; }
+		public int OrderStatusCode { get; set; }
+		public string OrderGuid { get; set; }
+		public int OrderId { get; set; }
+		public DateTime OrderDateUtc { get; set; }
+		public int RowCount { get; set; }
+		public string OrderStatus { get; set; }
+		public string StreetwiseOrderId { get; set; }
+	}
 }
 
-// JSON Object
+	// JSON Object
 
 
-    {
-        "results": [{
-			"id" : 0,
-			"orderTotal": 14.99,
-			"locationCode": '0012',
-			"DeliveryDate" : '',
-			"orderStatusCode: 7,
-			"orderGuid": null,
-			"orderId: 1234,
-			"orderDateUtc": '',
-			"rowCount: 3,
-			"OrderStatus" : 'Complete',
-			"streetwiseOrderId": '01234'
-        }],
-		"statusValues": [New,InPicking,PickingComplete,ToTransfer,Transfered,PriceConfirmed,Completed,ToDelete,Deleted,ToRefund,Refunded],
-		"searchStatus": [Complete],
-		"startRange: '',
-		"endRange" : '',
-		"locationCode: '0012'
-    }
+{
+	"results": [{
+		"id" : 0,
+		"orderTotal": 14.99,
+		"locationCode": '0012',
+		"DeliveryDate" : '2020-09-03T17:14:31.057',
+		"orderStatusCode: 7,
+		"orderGuid": null,
+		"orderId: 1234,
+		"orderDateUtc": '2020-09-03T17:14:31.057',
+		"rowCount: 3,
+		"OrderStatus" : 'Complete',
+		"streetwiseOrderId": '01234'
+	}],
+	"statusValues": [New,InPicking,PickingComplete,ToTransfer,Transfered,PriceConfirmed,Completed,ToDelete,Deleted,ToRefund,Refunded],
+	"searchStatus": [Complete],
+	"startRange: '2020-05-01',
+	"endRange" : '2020-10-31',
+	"locationCode: '0012'
+}
 
 ```
 
