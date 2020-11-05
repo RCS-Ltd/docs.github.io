@@ -286,7 +286,7 @@ I have also included a breakdown of the types used in that model for clarity.
 
 #### Streetwise.Api.Models.OnlineOrderDto
 ```cs
-		 /// <summary>
+		/// <summary>
 		/// The order number
 		/// REQUIRED
 		/// </summary>
@@ -624,6 +624,18 @@ If this fails, we dont save anything.    We also have the folowing rules:
 ### Refund Status
 
 Order and order items must be in a state of completed.
+
+### Order Search
+
+The search for orders requires `Streetwise.Api.Models.OrderSearchAndResults` to be passed in the data object
+of the requestModel.   This model can be requested from the API using the GetData method, along with the `GetOrderSearchModel` endpoint.
+The advantage of using the Search model from the API is that it will come pre-loaded with status types available for search.
+
+You can of course, skip the fetching of the pre-loaded model and just use the model directly.
+
+
+
+### Order Details
 
 
 
