@@ -9,7 +9,7 @@ layout: default
 The library is a .net standard 2.0 library.  and should work in almost any platform that runs .net and supports .net standard.
 
 
-### Endpoints
+### Available Methods
 
 ```cs
 	// Your clientid, your token, the store url ending with /slash
@@ -23,7 +23,7 @@ The library is a .net standard 2.0 library.  and should work in almost any platf
 	public async Task<ApiResponse> SendData(RequestModel requestModel, string apiUrl, string endpoint)
 ```
 
-## Data
+## Data Specific Models
 
 ```cs
   // Details of error messages
@@ -216,8 +216,8 @@ The Errors in ErrorMessage are detailed in ApiErrorMessages model.
 	   "success" : "false",
 	   "errorMessage" : "",
 	   "validationErrors" : [],
-	   "item" : "no longer used",
-	   "items" : ["no longer used", "no longer used"]
+	   "item" : "Result",
+	   "items" : ["result", "result"]
 	}
 
 	public class ValidationError
@@ -633,7 +633,88 @@ The advantage of using the Search model from the API is that it will come pre-lo
 
 You can of course, skip the fetching of the pre-loaded model and just use the model directly.
 
+## Model
+```cs
 
+namespace Streetwise.Api.Models
+{
+    public class OrderSearchAndResults
+    {
+        /// <summary>
+        /// The Results of the search
+        /// </summary>
+        public List<OrderSearchResult> Results { get; set; }
+
+        /// <summary>
+        /// List of available status
+        /// </summary>
+        public List<string> StatusValues { get; set; }
+
+        /// <summary>
+        /// List of status types to search for
+        /// </summary>
+        public List<string> SearchStatus { get; set; }
+
+        /// <summary>
+        /// Daterange search   Start date of range
+        /// </summary>
+        public DateTime? StartRange { get; set; }
+
+        /// <summary>
+        /// Date range search, end of search range
+        /// </summary>
+        public DateTime? EndRange { get; set; }
+
+        /// <summary>
+        /// Specific location to search for
+        /// </summary>
+        public string LocationCode { get; set; }
+    }
+}
+
+namespace Streetwise.Api.Models
+{
+    public class OrderSearchResult
+    {
+        public int Id { get; set; }
+        public decimal OrderTotal { get; set; }
+        public string LocationCode { get; set; }
+        public DateTime? DeliveryDate { get; set; }
+        public int OrderStatusCode { get; set; }
+        public string OrderGuid { get; set; }
+        public int OrderId { get; set; }
+        public DateTime OrderDateUtc { get; set; }
+        public int RowCount { get; set; }
+        public string OrderStatus { get; set; }
+        public string StreetwiseOrderId { get; set; }
+    }
+}
+
+// JSON Object
+
+
+    {
+        "results": [{
+			"id" : 0,
+			"orderTotal": 14.99,
+			"locationCode": '0012',
+			"DeliveryDate" : '',
+			"orderStatusCode: 7,
+			"orderGuid": null,
+			"orderId: 1234,
+			"orderDateUtc": '',
+			"rowCount: 3,
+			"OrderStatus" : 'Complete',
+			"streetwiseOrderId": '01234'
+        }],
+		"statusValues": [New,InPicking,PickingComplete,ToTransfer,Transfered,PriceConfirmed,Completed,ToDelete,Deleted,ToRefund,Refunded],
+		"searchStatus": [Complete],
+		"startRange: '',
+		"endRange" : '',
+		"locationCode: '0012'
+    }
+
+```
 
 ### Order Details
 
