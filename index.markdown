@@ -740,18 +740,22 @@ namespace Streetwise.Api.Models
         public OrderInfo OrderInfo { get; set; }
         public List<OrderItemInfo> Items { get; set; }
         public List<OnlineOrderNoteDto> Notes { get; set; }
-		public OnlineOrderDeliveryAddressDto DeliveryAddress { get; set; }
+        public OnlineOrderDeliveryAddressDto DeliveryAddress { get; set; }
     }
 
-    public class OrderInfo : OnlineOrderDto  // see details above for description of this base model
+    public class OrderInfo : OnlineOrderDto
     {
         
     }
 
-    public class OrderItemInfo : OnlineOrderItemsDto // see details above for description of this base model
+    public class OrderItemInfo : OnlineOrderItemsDto
     {
         public string ProductName { get; set; }
         public DateTime? CancelOrRefundedUtc { get; set; }
+        public string Size { get; set; }
+        public string Barcode { get; set; }
+
+        public string DisplayName => $"{ProductName} - {Barcode} - {ProductCode}";
     }
 
 }
