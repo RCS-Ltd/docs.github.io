@@ -383,6 +383,13 @@ I have also included a breakdown of the types used in that model for clarity.
 
 		public string StreetwiseOrderNumber { get; set; }
 
+		public int OrderStatus { get; set; }
+
+        /// <summary>
+        /// State how many order items is expected in number of rows
+        /// </summary>
+        public int? NumberOfItemRows { get; set; }
+
 	JSON : {
 		"orderNo" : "",
 		"memberCode" : 0,
@@ -400,7 +407,9 @@ I have also included a breakdown of the types used in that model for clarity.
 		"staffDiscount" : 0,
 		"couponValue" : 0,
 		"deliveryDate" : null,
-		"streetwiseOrderNumber" : null
+		"streetwiseOrderNumber" : null,
+		"orderStatus" : 1,
+		"numberOfItemRows" : null
 	}
 ``` 
 
@@ -745,7 +754,7 @@ namespace Streetwise.Api.Models
 
     public class OrderInfo : OnlineOrderDto
     {
-        
+        public string StatusMessage => ((OrderStatus) OrderStatus).ToString();
     }
 
     public class OrderItemInfo : OnlineOrderItemsDto
@@ -754,6 +763,11 @@ namespace Streetwise.Api.Models
         public DateTime? CancelOrRefundedUtc { get; set; }
         public string Size { get; set; }
         public string Barcode { get; set; }
+		public int LineStatus { get; set; }
+
+		public decimal RowTotal => PurchasePrice * PickedQty ?? 0;
+
+        public string StatusMessage => ((OrderItemStatus) LineStatus).ToString();
 
         public string DisplayName => $"{ProductName} - {Barcode} - {ProductCode}";
     }
@@ -817,4 +831,5 @@ So it would also be prundent to add in the facility to re-send / re-try an order
 		public const string OrderTotalMisMatch = "Order total, does not match with order items.  item.Qty*item.PurchasePrice = RowTotal.";
 		public const string OrderCannotBeRefunded = "Order {{ID}} cannot be refunded as it is not yet completed.";
 		public const string OrderItemCannotBeRefunded = "Order item {{ID}} cannot be refunded as it is not yet completed";
+		public const string OrderItemCountMisatch = "NumberOfItemRows ({{expected}}) does not match the number of rows in orderItems ({{actual}})";
 ```
